@@ -1,0 +1,15 @@
+{
+  "name": "ReactTestingLibrary",
+  "tree": {
+    "$className": "Folder",
+    "Packages": {
+      "$path": "Packages",
+      "ReactTestingLibrary": {
+        "$path": "src"
+      },
+      "Types": {
+        "$path": "types"
+      }
+    }
+  }
+}

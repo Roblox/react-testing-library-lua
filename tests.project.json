@@ -1,0 +1,25 @@
+{
+  "name": "ReactTestingLibraryTestModel",
+  "tree": {
+    "$className": "DataModel",
+
+    "HttpService": {
+      "$className": "HttpService",
+      "$properties": {
+        "HttpEnabled": true
+      }
+    },
+    "ReplicatedStorage": {
+      "$className": "ReplicatedStorage",
+      "Packages": {
+        "$path": "Packages",
+        "ReactTestingLibrary": {
+          "$path": "src"
+        },
+        "Types": {
+          "$path": "types"
+        }
+      }
+    }
+  }
+}

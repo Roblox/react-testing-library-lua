@@ -1,0 +1,15 @@
+[package]
+name = "ReactTestingLibrary"
+version = "0.0.1"
+authors = [
+
+]
+content_root = "src"
+
+[dependencies]
+LuauPolyfill = "github.com/roblox/luau-polyfill@0.3.4"
+Promise = "github.com/evaera/roblox-lua-promise@4.0.0"
+DomTestingLibrary = { git = "https://github.com/roblox/dom-testing-library-lua.git", rev="main" }
+
+[dev_dependencies]
+JestGlobals = { git = "https://github.com/roblox/jest-roblox.git", rev="master" }
