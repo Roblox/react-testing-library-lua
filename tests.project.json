@@ -15,9 +15,6 @@
         "$path": "Packages",
         "ReactTestingLibrary": {
           "$path": "src"
-        },
-        "Types": {
-          "$path": "types"
         }
       }
     }

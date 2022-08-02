@@ -7,9 +7,13 @@ authors = [
 content_root = "src"
 
 [dependencies]
-LuauPolyfill = "github.com/roblox/luau-polyfill@0.3.4"
+LuauPolyfill = "github.com/roblox/luau-polyfill@0.4.0"
 Promise = "github.com/evaera/roblox-lua-promise@4.0.0"
 DomTestingLibrary = { git = "https://github.com/roblox/dom-testing-library-lua.git", rev="main" }
+React = { git = "https://github.com/roblox/roact-alignment.git", package = "React" }
+ReactRoblox = { git = "https://github.com/roblox/roact-alignment.git", package = "ReactRoblox" }
+Scheduler = { git = "https://github.com/roblox/roact-alignment.git", package = "Scheduler" }
+Shared = { git = "https://github.com/roblox/roact-alignment.git", package = "Shared" }
 
 [dev_dependencies]
 JestGlobals = { git = "https://github.com/roblox/jest-roblox.git", rev="master" }
