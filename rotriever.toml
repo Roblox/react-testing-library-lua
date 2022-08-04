@@ -17,3 +17,4 @@ Shared = { git = "https://github.com/roblox/roact-alignment.git", package = "Sha
 
 [dev_dependencies]
 JestGlobals = { git = "https://github.com/roblox/jest-roblox.git", rev="master" }
+LuauRegExp = "github.com/Roblox/luau-regexp@0.2.0"

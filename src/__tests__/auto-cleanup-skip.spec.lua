@@ -8,12 +8,22 @@ return function()
 	local document = require(Packages.DomTestingLibrary).document
 
 	local React = require(Packages.React)
-	local render
+	local render, cleanup
 	beforeAll(function()
 		_G.RTL_SKIP_AUTO_CLEANUP = "true"
 		local rtl = require(script.Parent.Parent)(afterEach)
 		render = rtl.render
+		-- ROBLOX deviation START: force cleanup
+		cleanup = rtl.cleanup
+		-- ROBLOX deviation END
 	end)
+
+	-- ROBLOX deviation START: restore so it cleans up after this test
+	afterAll(function()
+		_G.RTL_SKIP_AUTO_CLEANUP = nil
+		cleanup()
+	end)
+	-- ROBLOX deviation END
 
 	-- This one verifies that if RTL_SKIP_AUTO_CLEANUP is set
 	-- then we DON'T auto-wire up the afterEach for folks
@@ -22,9 +32,6 @@ return function()
 	end)
 
 	it("second", function()
-		-- ROBLOX deviation START: restore so it cleans up after this test
-		_G.RTL_SKIP_AUTO_CLEANUP = nil
-		-- ROBLOX deviation END
 		jestExpect(document:GetChildren()[1]:GetChildren()[1]:IsA("TextLabel")).toBe(true)
 		jestExpect(document:GetChildren()[1]:GetChildren()[1].Text).toBe("hi")
 	end)
