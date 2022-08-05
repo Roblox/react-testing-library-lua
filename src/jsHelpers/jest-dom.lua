@@ -42,4 +42,41 @@ local function toBeEmptyDOMElement(self, received: Instance, expected)
 end
 exports.toBeEmptyDOMElement = toBeEmptyDOMElement
 
+local function toHaveTextContent(self, received: Instance, expected)
+	local matcherName = "toHaveTextContent"
+	if received:IsA("TextBox") then
+		error("toHaveTextContent is not meant to be used with TextBox")
+	end
+
+	local text = (received :: any).Text
+	local checkingWithEmptyString = not expected or expected == "" or text == ""
+
+	local check
+	if typeof(expected) == "string" then
+		check = string.find(text, expected, 1, true)
+	elseif typeof(expected) == "table" and typeof(expected.test) == "function" then
+		check = expected:test(text)
+	else
+		error("Unhandled expected value type: string or regex is required")
+	end
+
+	local options = {
+		isNot = self.isNot,
+		promise = self.promise,
+	}
+
+	local pass = not checkingWithEmptyString and not not check
+	local message = function()
+		return self.utils.matcherHint(matcherName, nil, nil, options) :: string
+			.. "\n\n"
+			.. (
+				if checkingWithEmptyString
+					then "Checking with empty string will always match, use .toBeEmptyDOMElement() instead"
+					else "Expected element " .. (if self.isNot then "not to" else "to") .. " have text content"
+			)
+	end
+	return { message = message, pass = pass }
+end
+exports.toHaveTextContent = toHaveTextContent
+
 return exports

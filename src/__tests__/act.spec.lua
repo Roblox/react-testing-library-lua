@@ -51,9 +51,7 @@ return function()
 		task.wait()
 		effectCb:mockClear()
 		fireEvent.click(buttonNode)
-		-- ROBLOX deviation START: replace toHaveTextContext
-		jestExpect(buttonNode.Text).toBe("1")
-		-- ROBLOX deviation END
+		jestExpect(buttonNode).toHaveTextContent("1")
 		jestExpect(effectCb).toHaveBeenCalledTimes(1)
 	end)
 

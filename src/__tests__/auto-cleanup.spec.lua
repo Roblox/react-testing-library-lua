@@ -16,8 +16,6 @@ return function()
 	end)
 
 	it("second", function()
-		-- ROBLOX deviation START: not using toBeEmptyDOMElement
-		jestExpect(#document:GetChildren()).toBe(0)
-		-- ROBLOX deviation END
+		jestExpect(document).toBeEmptyDOMElement()
 	end)
 end

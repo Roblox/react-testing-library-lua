@@ -93,7 +93,7 @@ return function()
 							return screen.getByText("Loading...")
 						end
 						waitForElementToBeRemoved(loading):expect()
-						jestExpect(screen.getByTestId("message").Text).toMatch(RegExp("Hello World"))
+						jestExpect(screen.getByTestId("message")).toHaveTextContent(RegExp("Hello World"))
 					end)
 					:expect()
 			end)
@@ -106,9 +106,7 @@ return function()
 							return screen.getByText(RegExp("Loaded this message:"))
 						end
 						waitFor(message):expect()
-						-- ROBLOX deviation START: replace .toHaveTextContent
-						jestExpect(screen.getByTestId("message").Text).toMatch(RegExp("Hello World"))
-						-- ROBLOX deviation END
+						jestExpect(screen.getByTestId("message")).toHaveTextContent(RegExp("Hello World"))
 					end)
 					:expect()
 			end)
@@ -117,9 +115,7 @@ return function()
 				return Promise.resolve()
 					:andThen(function()
 						render(React.createElement(ComponentWithLoader, nil))
-						-- ROBLOX deviation START: replace .resolves.toHaveTextContent
-						jestExpect((screen.findByTestId("message"):expect()).Text).toMatch(RegExp("Hello World"))
-						-- ROBLOX deviation END
+						jestExpect((screen.findByTestId("message"):expect())).toHaveTextContent(RegExp("Hello World"))
 					end)
 					:expect()
 			end)
