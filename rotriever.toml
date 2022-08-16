@@ -14,7 +14,9 @@ React = { git = "https://github.com/roblox/roact-alignment.git", package = "Reac
 ReactRoblox = { git = "https://github.com/roblox/roact-alignment.git", package = "ReactRoblox" }
 Scheduler = { git = "https://github.com/roblox/roact-alignment.git", package = "Scheduler" }
 Shared = { git = "https://github.com/roblox/roact-alignment.git", package = "Shared" }
+JestGlobals = "github.com/roblox/jest-roblox@3.0.0-alpha"
 
 [dev_dependencies]
-JestGlobals = { git = "https://github.com/roblox/jest-roblox.git", rev="master" }
+Jest = { git = "https://github.com/roblox/jest-roblox.git", version="3.0.0-alpha", package="Jest" }
 LuauRegExp = "github.com/Roblox/luau-regexp@0.2.0"
+
