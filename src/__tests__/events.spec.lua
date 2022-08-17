@@ -37,6 +37,27 @@ local eventTypes = {
 }
 -- ROBLOX deviation END
 
+-- ROBLOX deviation START: subset with implemented methods in RTL, but not implemented in DTL
+local unhandledEventTypes = {
+	{
+		type = "Mouse",
+		events = {
+			{ fireEventName = "mouseEnter" },
+			{ fireEventName = "mouseLeave" },
+		},
+		elementType = "TextButton",
+	},
+	{
+		type = "Pointer",
+		events = {
+			{ fireEventName = "pointerEnter" },
+			{ fireEventName = "pointerLeave" },
+		},
+		elementType = "TextButton",
+	},
+}
+-- ROBLOX deviation END
+
 Array.forEach(eventTypes, function(ref)
 	local type_, events, elementType, init = ref.type, ref.events, ref.elementType, ref.init
 	describe(("%s Events"):format(type_), function()
@@ -136,5 +157,24 @@ end)
 -- 	expect(handleFocus).toHaveBeenCalledTimes(1)
 -- 	expect(handleBubbledFocus).toHaveBeenCalledTimes(1)
 -- end)
+-- ROBLOX deviation END
+
+-- ROBLOX deviation START: No upstream equivalent
+
+Array.forEach(unhandledEventTypes, function(ref)
+	local type_, events, elementType, init = ref.type, ref.events, ref.elementType, ref.init
+	describe(("Unhandled %s Events"):format(type_), function()
+		Array.forEach(events, function(event: { fireEventName: string })
+			local propName = ("on%s%s"):format(event.fireEventName:sub(1, 1):upper(), event.fireEventName:sub(2))
+			test(("triggers %s"):format(propName), function()
+				local ref = React.createRef()
+				render(React.createElement(elementType, { ref = ref }))
+				expect(function()
+					fireEvent[event.fireEventName](ref.current, init)
+				end).toThrowError("Event not found")
+			end)
+		end)
+	end)
+end)
 -- ROBLOX deviation END
 return {}

@@ -51,22 +51,24 @@ fireEvent.pointerLeave = function(...: any)
 	return fireEvent.pointerOut(...)
 end
 
-local select_ = fireEvent.select
-fireEvent.select = function(node, init)
-	select_(node, init)
-	-- React tracks this event only on focused inputs
-	node.focus()
+-- ROBLOX deviation START: no select event available
+-- local select_ = fireEvent.select
+-- fireEvent.select = function(node, init)
+-- 	select_(node, init)
+-- 	-- React tracks this event only on focused inputs
+-- 	node.focus()
 
-	-- React creates this event when one of the following native events happens
-	-- - contextMenu
-	-- - mouseUp
-	-- - dragEnd
-	-- - keyUp
-	-- - keyDown
-	-- so we can use any here
-	-- @link https://github.com/facebook/react/blob/b87aabdfe1b7461e7331abb3601d9e6bb27544bc/packages/react-dom/src/events/SelectEventPlugin.js#L203-L224
-	fireEvent.keyUp(node, init)
-end
+-- 	-- React creates this event when one of the following native events happens
+-- 	-- - contextMenu
+-- 	-- - mouseUp
+-- 	-- - dragEnd
+-- 	-- - keyUp
+-- 	-- - keyDown
+-- 	-- so we can use any here
+-- 	-- @link https://github.com/facebook/react/blob/b87aabdfe1b7461e7331abb3601d9e6bb27544bc/packages/react-dom/src/events/SelectEventPlugin.js#L203-L224
+-- 	fireEvent.keyUp(node, init)
+-- end
+-- ROBLOX deviation END
 
 -- React event system tracks native focusout/focusin events for
 -- running blur/focus handlers

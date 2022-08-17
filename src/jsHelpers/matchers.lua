@@ -5,7 +5,7 @@ local Array = LuauPolyfill.Array
 
 local exports = {}
 
-local function toMatchInlineSnapshot(self, received, expected)
+local function toMatchInlineSnapshot(self, received, expected: string)
 	local function serialize(received)
 		if typeof(received) == "string" then
 			return received

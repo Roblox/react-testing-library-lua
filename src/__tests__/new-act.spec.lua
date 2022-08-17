@@ -15,7 +15,7 @@ type Promise<T> = LuauPolyfill.Promise<T>
 
 local Promise = require(Packages.Promise)
 
-local asyncAct
+local asyncAct, _consoleErrorMock
 
 -- ROBLOX deviation: Mock is not supported
 -- local _testUtils = require(script.Parent.Parent.jsHelpers["react-dom"]["test-utils"])
@@ -37,8 +37,7 @@ beforeEach(function()
 end)
 
 afterEach(function()
-	-- ROBLOX deviation: mockRestore is unavailable, resetting manually
-	-- consoleErrorMock.mockRestore()
+	(console.error :: any):mockRestore()
 	console.error = originalConsoleError
 end)
 
