@@ -7,16 +7,16 @@ authors = [
 content_root = "src"
 
 [dependencies]
-LuauPolyfill = "github.com/roblox/luau-polyfill@0.4.0"
+LuauPolyfill = "github.com/roblox/luau-polyfill@1.0.0"
 Promise = "github.com/evaera/roblox-lua-promise@4.0.0"
 DomTestingLibrary = { git = "https://github.com/roblox/dom-testing-library-lua.git", rev="main" }
-React = { git = "https://github.com/roblox/roact-alignment.git", package = "React" }
-ReactRoblox = { git = "https://github.com/roblox/roact-alignment.git", package = "ReactRoblox" }
-Scheduler = { git = "https://github.com/roblox/roact-alignment.git", package = "Scheduler" }
-Shared = { git = "https://github.com/roblox/roact-alignment.git", package = "Shared" }
+React = "github.com/roblox/roact-alignment@17.0.1-rc.15"
+ReactRoblox = "github.com/roblox/roact-alignment@17.0.1-rc.15"
+Scheduler = "github.com/roblox/roact-alignment@17.0.1-rc.15"
+Shared = "github.com/roblox/roact-alignment@17.0.1-rc.15"
 JestGlobals = "github.com/roblox/jest-roblox@3.0.0-alpha"
 
 [dev_dependencies]
-Jest = { git = "https://github.com/roblox/jest-roblox.git", version="3.0.0-alpha", package="Jest" }
+Jest = "github.com/roblox/jest-roblox@3.0.0-alpha"
 LuauRegExp = "github.com/Roblox/luau-regexp@0.2.0"
 
