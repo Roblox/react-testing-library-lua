@@ -15,7 +15,7 @@ local ParentModule = require(script.Parent.Parent)
 local render = ParentModule.render
 local screen = ParentModule.screen
 
-test.only("renders div into document", function()
+test("renders div into document", function()
 	local ref = React.createRef()
 	local container = render(React.createElement("Frame", { ref = ref })).container
 	-- ROBLOX deviation START: replace firstChild with Instance equivalent

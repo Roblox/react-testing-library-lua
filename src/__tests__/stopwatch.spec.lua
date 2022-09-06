@@ -73,7 +73,6 @@ end
 test("unmounts a component", function()
 	return Promise.resolve():andThen(function()
 		-- ROBLOX deviation START: replace spyOn with jest.fn
-		local originalConsoleError = console.error
 		console.error = jest.fn(function() end)
 		-- ROBLOX deviation END
 		local ref = render(React.createElement(StopWatch, nil))
@@ -95,9 +94,6 @@ test("unmounts a component", function()
 			0
 			-- ROBLOX deviation END
 		)
-		-- ROBLOX deviation START: restore console.error
-		console.error = originalConsoleError
-		-- ROBLOX deviation END
 	end)
 end)
 return {}

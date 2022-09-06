@@ -68,7 +68,6 @@ test("cleanup runs effect cleanup functions", function()
 end)
 
 describe("fake timers and missing act warnings", function()
-	local originalConsoleError = console.error
 	beforeEach(function()
 		jest.resetAllMocks()
 		-- ROBLOX deviation START: replace spyOn
@@ -80,9 +79,6 @@ describe("fake timers and missing act warnings", function()
 	end)
 
 	afterEach(function()
-		-- ROBLOX deviation START: replace spyOn
-		console.error = originalConsoleError
-		-- ROBLOX deviation END
 		jest.useRealTimers()
 	end)
 
@@ -147,7 +143,7 @@ describe("fake timers and missing act warnings", function()
 			return nil
 		end
 		render(React.createElement(Test, nil))
-		task.wait(2)
+		task.wait()
 
 		jest.runAllTimers()
 		cleanup()

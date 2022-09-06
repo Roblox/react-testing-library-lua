@@ -17,7 +17,7 @@ test("first", function()
 	render(React.createElement("TextLabel", { Text = "hi" }))
 end)
 
-test.only("second", function()
+test("second", function()
 	expect(document).toBeEmptyDOMElement()
 end)
 

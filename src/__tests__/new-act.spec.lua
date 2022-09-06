@@ -15,7 +15,7 @@ type Promise<T> = LuauPolyfill.Promise<T>
 
 local Promise = require(Packages.Promise)
 
-local asyncAct, _consoleErrorMock
+local asyncAct, consoleErrorMock
 
 -- ROBLOX deviation: Mock is not supported
 -- local _testUtils = require(script.Parent.Parent.jsHelpers["react-dom"]["test-utils"])
@@ -27,18 +27,17 @@ local asyncAct, _consoleErrorMock
 -- 	}
 -- end)
 
-local originalConsoleError = console.error
-
 beforeEach(function()
-	console.error = jest.fn()
-
 	jest.resetModules()
 	asyncAct = require(script.Parent.Parent["act-compat"]).asyncAct
+	-- ROBLOX deviation START: replace spyOn
+	consoleErrorMock = jest.fn()
+	console.error = consoleErrorMock
+	-- ROBLOX deviation END
 end)
 
 afterEach(function()
-	(console.error :: any):mockRestore()
-	console.error = originalConsoleError
+	consoleErrorMock:mockRestore()
 end)
 
 test("async act works when it does not exist (older versions of react)", function()

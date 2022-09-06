@@ -15,6 +15,9 @@
         "$path": "Packages",
         "ReactTestingLibrary": {
           "$path": "src"
+        },
+        "TestsSetup": {
+          "$path": "tests"
         }
       }
     }
