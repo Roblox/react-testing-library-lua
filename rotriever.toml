@@ -1,6 +1,6 @@
 [package]
 name = "ReactTestingLibrary"
-version = "12.1.5"
+version = "12.2.0"
 authors = [
     "Ignacio Falk <flakolefluk@gmail.com>",
     "Allan Jeremy <dev@allanjeremy.com>",
@@ -20,4 +20,3 @@ JestGlobals = "github.com/roblox/jest-roblox@3.0.0"
 [dev_dependencies]
 Jest = "github.com/roblox/jest-roblox@3.0.0"
 LuauRegExp = "github.com/Roblox/luau-regexp@0.2.0"
-
