@@ -1,11 +1,12 @@
 [package]
 name = "ReactTestingLibrary"
-version = "12.2.0"
+version = "12.2.1"
 authors = [
     "Ignacio Falk <flakolefluk@gmail.com>",
     "Allan Jeremy <dev@allanjeremy.com>",
 ]
 content_root = "src"
+files = ["*", "!**/__tests__/**"]
 
 [dependencies]
 LuauPolyfill = "github.com/roblox/luau-polyfill@1"
