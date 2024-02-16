@@ -36,6 +36,7 @@ test("cleans up the document", function()
 	end
 
 	function Test:render()
+		-- selene: allow(roblox_incorrect_roact_usage)
 		return React.createElement("Frame", { Name = divId })
 	end
 

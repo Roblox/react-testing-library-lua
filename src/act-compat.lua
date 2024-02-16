@@ -48,7 +48,12 @@ local function asyncAct(cb)
 								args[
 									1 --[[ ROBLOX adaptation: added 1 to array index ]]
 								],
-								"Warning: Do not await the result of calling ReactTestUtils.act"
+								-- ROBLOX deviation: in upstream, this error is accounting for a specific react version
+								-- (16.8.6); for us, it needs to account for the exact error version in our ported
+								-- ReactTestUtilsPublicAct
+								"Do not await the result of calling act(...) with sync logic, it is not a Promise.",
+								1,
+								true
 							)
 							== 1
 					then
@@ -58,7 +63,9 @@ local function asyncAct(cb)
 						firstArgIsString
 						and string.find(
 								args[1],
-								"Warning: The callback passed to ReactTestUtils.act(...) function must not return anything"
+								"Warning: The callback passed to ReactTestUtils.act(...) function must not return anything",
+								1,
+								true
 							)
 							== 1
 					then

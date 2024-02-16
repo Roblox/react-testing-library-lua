@@ -6,8 +6,6 @@ local expect = JestGlobals.expect
 local test = JestGlobals.test
 local jest = JestGlobals.jest
 
-local Promise = require(Packages.Promise)
-
 local React = require(Packages.React)
 local ParentModule = require(script.Parent.Parent)
 local render = ParentModule.render
@@ -25,13 +23,9 @@ test("render calls useEffect immediately", function()
 end)
 
 test("findByTestId returns the element", function()
-	return Promise.resolve()
-		:andThen(function()
-			local ref = React.createRef()
-			render(React.createElement("Frame", { ref = ref, [React.Tag] = "data-testid=foo" }))
-			expect(screen.findByTestId("foo"):expect()).toBe(ref.current)
-		end)
-		:expect()
+	local ref = React.createRef()
+	render(React.createElement("Frame", { ref = ref, [React.Tag] = "data-testid=foo" }))
+	expect(screen.findByTestId("foo"):expect()).toBe(ref.current)
 end)
 
 test("fireEvent triggers useEffect calls", function()

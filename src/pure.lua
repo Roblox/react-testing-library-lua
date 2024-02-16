@@ -157,7 +157,6 @@ function cleanupAtContainer(container)
 		-- ROBLOX deviation START. not using ReactDOM:unmountComponentAtNode
 		-- ReactDOM:unmountComponentAtNode(container)
 		renderer:unmount()
-		-- ROBLOX deviation END
 	end)
 	if container.Parent == domModule.document then
 		container.Parent = nil

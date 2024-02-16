@@ -107,11 +107,11 @@ test("renders options.wrapper around node", function()
 end)
 
 -- ROBLOX FIXME: useEffect is triggered before unmount
-test.skip("flushes useEffect cleanup functions sync on unmount()", function()
-	local spy = jest.fn()
+test("flushes useEffect cleanup functions sync on unmount()", function()
+	local spy, spyFn = jest.fn()
 	local function Component()
 		React.useEffect(function()
-			spy()
+			return spyFn
 		end, {})
 		return nil
 	end

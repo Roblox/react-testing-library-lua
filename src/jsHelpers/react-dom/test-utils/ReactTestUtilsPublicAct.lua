@@ -41,6 +41,10 @@ local batchedUpdates = ReactRoblox.unstable_batchedUpdates
 
 local IsSomeRendererActing = ReactSharedInternals.IsSomeRendererActing
 
+-- ROBLOX deviation: use realDelay in place of enqueueTask as a fallback to
+-- avoid trouble caused by fake timers
+local realDelay = require(script.Parent["realTaskDelay.roblox.global"])
+
 -- This is the public version of `ReactTestUtils.act`. It is implemented in
 -- "userspace" (i.e. not the reconciler), so that it doesn't add to the
 -- production bundle size.
@@ -64,7 +68,24 @@ end
 local function flushWorkAndMicroTasks(onDone: (err: any?) -> ())
 	local ok, err = pcall(function()
 		flushWork()
-		enqueueTask(function()
+		-- ROBLOX deviation START: We need to work around fake timers here in a
+		-- way that upstream would in `enqueueTask`'s logic. See the upstream
+		-- implementation here:
+		-- https://github.com/facebook/react/blob/v17.0.1/packages/shared/enqueueTask.js#L16-L22
+		local enqueueTaskWithRelevantTimers: (() -> ()) -> () = enqueueTask
+		if type(task.delay) == "table" then
+			-- ROBLOX TODO: the upstream implementation referenced above
+			-- ultimately uses the _real_ implementation of `setImmediate`,
+			-- which does wait for the next tick in the event loop. In our
+			-- implementation, fake timers fundamentally block access to
+			-- `task.delay`, which is our closest equivalent. Instead, it should
+			-- be sufficient to ignore the engine frame boundary and use
+			-- `task.defer` instead, which is unaffected by fake timers
+			enqueueTaskWithRelevantTimers = function(fn)
+				return realDelay(0, fn)
+			end
+		end
+		enqueueTaskWithRelevantTimers(function()
 			if flushWork() then
 				flushWorkAndMicroTasks(onDone)
 			else
@@ -94,12 +115,10 @@ local function act(callback: (() -> Thenable<any>) | () -> ())
 		end
 	end
 	local previousActingUpdatesScopeDepth = actingUpdatesScopeDepth
-	local previousIsSomeRendererActing
-	local previousIsThisRendererActing
 	actingUpdatesScopeDepth += 1
 
-	previousIsSomeRendererActing = IsSomeRendererActing.current
-	previousIsThisRendererActing = IsThisRendererActing.current
+	local previousIsSomeRendererActing = IsSomeRendererActing.current
+	local previousIsThisRendererActing = IsThisRendererActing.current
 	IsSomeRendererActing.current = true
 	IsThisRendererActing.current = true
 
