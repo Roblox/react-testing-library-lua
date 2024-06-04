@@ -37,8 +37,8 @@ local eventTypes = {
 	{
 		type = "Mouse",
 		events = {
-			{ fireEventName = "mouseEnter" },
-			{ fireEventName = "mouseLeave" },
+			{ fireEventName = "mouseEnter", instanceEventName = "MouseEnter" },
+			{ fireEventName = "mouseLeave", instanceEventName = "MouseLeave" },
 		},
 		elementType = "TextButton",
 	},
