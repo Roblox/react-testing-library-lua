@@ -56,10 +56,11 @@ function StopWatch:render()
 		"Frame",
 		nil,
 		React.createElement("TextLabel", { Text = lapse .. " ms" }),
-		React.createElement(
-			"TextButton",
-			{ [React.Event.Activated] = self.handleRunClick, Text = if running then "Stop" else "Start" }
-		),
+		React.createElement("TextButton", {
+			Text = if running then "Stop" else "Start",
+			Size = UDim2.fromOffset(100, 100),
+			[React.Event.Activated] = self.handleRunClick,
+		}),
 		React.createElement("TextButton", { [React.Event.Activated] = self.handleClearClick, Text = "Clear" })
 	)
 end
@@ -77,7 +78,8 @@ test("unmounts a component", function()
 		-- ROBLOX deviation END
 		local ref = render(React.createElement(StopWatch, nil))
 		local unmount, container = ref.unmount, ref.container
-		fireEvent.click(screen.getByText("Start"))
+		local label = screen.getByText("Start")
+		fireEvent.click(label)
 		unmount()
 		-- hey there reader! You don't need to have an assertion like this one
 		-- this is just me making sure that the unmount function works.

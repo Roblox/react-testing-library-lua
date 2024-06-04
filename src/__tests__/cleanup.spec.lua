@@ -11,11 +11,9 @@ local jest = JestGlobals.jest
 
 local LuauPolyfill = require(Packages.LuauPolyfill)
 local console = LuauPolyfill.console
-local setTimeout = LuauPolyfill.setTimeout
 
 local document = require(Packages.DomTestingLibrary).document
 
-local Promise = require(Packages.Promise)
 local getElementByName = require(script.Parent.Parent.jsHelpers.Element).getElementByName
 
 local React = require(Packages.React)
@@ -76,7 +74,7 @@ describe("fake timers and missing act warnings", function()
 			-- assert messages explicitly
 		end)
 		-- ROBLOX deviation END
-		jest.useFakeTimers()
+		jest.useFakeTimers().setEngineFrameTime(1000 / 60)
 	end)
 
 	afterEach(function()
@@ -90,8 +88,8 @@ describe("fake timers and missing act warnings", function()
 			local _, setDeferredCounter = React.useState(nil :: number?)
 			React.useEffect(function()
 				local cancelled = false
-				-- ROBLOX deviation START: Lua Promise.resolve is not scheduled. Must use delay(0) for the same behavior
-				Promise.delay(0):andThen(function()
+				-- ROBLOX deviation START: Using task.delay for mockability
+				task.delay(0, function()
 					microTaskSpy()
 					-- eslint-disable-next-line jest/no-if -- false positive
 					if not cancelled then
@@ -129,12 +127,12 @@ describe("fake timers and missing act warnings", function()
 			local _, setDeferredCounter = React.useState(nil :: number?)
 			React.useEffect(function()
 				local cancelled = false
-				setTimeout(function()
+				task.delay(0, function()
 					deferredStateUpdateSpy()
 					if not cancelled then
 						setDeferredCounter(counter)
 					end
-				end, 0)
+				end)
 
 				return function()
 					cancelled = true
@@ -144,9 +142,9 @@ describe("fake timers and missing act warnings", function()
 			return nil
 		end
 		render(React.createElement(Test, nil))
-		task.wait()
 
-		jest.runAllTimers()
+		jest.advanceTimersByTime(0)
+
 		cleanup()
 
 		expect(deferredStateUpdateSpy).toHaveBeenCalledTimes(1)
