@@ -56,10 +56,11 @@ function StopWatch:render()
 		"Frame",
 		nil,
 		React.createElement("TextLabel", { Text = lapse .. " ms" }),
-		React.createElement(
-			"TextButton",
-			{ [React.Event.Activated] = self.handleRunClick, Text = if running then "Stop" else "Start" }
-		),
+		React.createElement("TextButton", {
+			Text = if running then "Stop" else "Start",
+			Size = UDim2.fromOffset(100, 100),
+			[React.Event.Activated] = self.handleRunClick,
+		}),
 		React.createElement("TextButton", { [React.Event.Activated] = self.handleClearClick, Text = "Clear" })
 	)
 end
