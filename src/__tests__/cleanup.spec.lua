@@ -76,7 +76,7 @@ describe("fake timers and missing act warnings", function()
 			-- assert messages explicitly
 		end)
 		-- ROBLOX deviation END
-		jest.useFakeTimers()
+		jest.useFakeTimers().setEngineFrameTime(1000 / 60)
 	end)
 
 	afterEach(function()
