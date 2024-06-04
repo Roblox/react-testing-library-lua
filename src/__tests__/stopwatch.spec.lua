@@ -77,7 +77,8 @@ test("unmounts a component", function()
 		-- ROBLOX deviation END
 		local ref = render(React.createElement(StopWatch, nil))
 		local unmount, container = ref.unmount, ref.container
-		fireEvent.click(screen.getByText("Start"))
+		local label = screen.getByText("Start")
+		fireEvent.click(label)
 		unmount()
 		-- hey there reader! You don't need to have an assertion like this one
 		-- this is just me making sure that the unmount function works.
