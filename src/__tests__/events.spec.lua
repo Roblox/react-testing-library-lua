@@ -34,19 +34,19 @@ local eventTypes = {
 		elementType = "TextBox",
 		init = { key = Enum.KeyCode.Return },
 	},
+	{
+		type = "Mouse",
+		events = {
+			{ fireEventName = "mouseEnter", instanceEventName = "MouseEnter" },
+			{ fireEventName = "mouseLeave", instanceEventName = "MouseLeave" },
+		},
+		elementType = "TextButton",
+	},
 }
 -- ROBLOX deviation END
 
 -- ROBLOX deviation START: subset with implemented methods in RTL, but not implemented in DTL
 local unhandledEventTypes = {
-	{
-		type = "Mouse",
-		events = {
-			{ fireEventName = "mouseEnter" },
-			{ fireEventName = "mouseLeave" },
-		},
-		elementType = "TextButton",
-	},
 	{
 		type = "Pointer",
 		events = {
@@ -171,7 +171,7 @@ Array.forEach(unhandledEventTypes, function(ref)
 				render(React.createElement(elementType, { ref = ref }))
 				expect(function()
 					fireEvent[event.fireEventName](ref.current, init)
-				end).toThrowError("Event not found")
+				end).toThrowError(string.format("Event '%s' not supported", event.fireEventName))
 			end)
 		end)
 	end)

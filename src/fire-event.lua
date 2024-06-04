@@ -26,19 +26,21 @@ Array.forEach(Object.keys(dtlFireEvent), function(key)
 	end
 end)
 
--- React event system tracks native mouseOver/mouseOut events for
--- running onMouseEnter/onMouseLeave handlers
--- @link https://github.com/facebook/react/blob/b87aabdfe1b7461e7331abb3601d9e6bb27544bc/packages/react-dom/src/events/EnterLeaveEventPlugin.js#L24-L31
-local mouseEnter = fireEvent.mouseEnter
-local mouseLeave = fireEvent.mouseLeave
-fireEvent.mouseEnter = function(...: any)
-	mouseEnter(...)
-	return fireEvent.mouseOver(...)
-end
-fireEvent.mouseLeave = function(...: any)
-	mouseLeave(...)
-	return fireEvent.mouseOut(...)
-end
+-- ROBLOX deviation START: mouseEnter/mouseLeave handled by dom-testing-library
+-- -- React event system tracks native mouseOver/mouseOut events for
+-- -- running onMouseEnter/onMouseLeave handlers
+-- -- @link https://github.com/facebook/react/blob/b87aabdfe1b7461e7331abb3601d9e6bb27544bc/packages/react-dom/src/events/EnterLeaveEventPlugin.js#L24-L31
+-- local mouseEnter = fireEvent.mouseEnter
+-- local mouseLeave = fireEvent.mouseLeave
+-- fireEvent.mouseEnter = function(...: any)
+-- 	mouseEnter(...)
+-- 	return fireEvent.mouseOver(...)
+-- end
+-- fireEvent.mouseLeave = function(...: any)
+-- 	mouseLeave(...)
+-- 	return fireEvent.mouseOut(...)
+-- end
+-- ROBLOX deviation END
 
 local pointerEnter = fireEvent.pointerEnter
 local pointerLeave = fireEvent.pointerLeave
