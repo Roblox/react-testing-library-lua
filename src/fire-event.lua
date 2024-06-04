@@ -26,7 +26,7 @@ Array.forEach(Object.keys(dtlFireEvent), function(key)
 	end
 end)
 
--- ROBLOX deviation START: mousEnter/mouseLeave handled by dom-testing-library
+-- ROBLOX deviation START: mouseEnter/mouseLeave handled by dom-testing-library
 -- -- React event system tracks native mouseOver/mouseOut events for
 -- -- running onMouseEnter/onMouseLeave handlers
 -- -- @link https://github.com/facebook/react/blob/b87aabdfe1b7461e7331abb3601d9e6bb27544bc/packages/react-dom/src/events/EnterLeaveEventPlugin.js#L24-L31
