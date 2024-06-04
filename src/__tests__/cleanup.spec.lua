@@ -142,10 +142,9 @@ describe("fake timers and missing act warnings", function()
 			return nil
 		end
 		render(React.createElement(Test, nil))
-		--task.wait()
 
 		jest.advanceTimersByTime(0)
-		jest.runAllTimers()
+
 		cleanup()
 
 		expect(deferredStateUpdateSpy).toHaveBeenCalledTimes(1)
