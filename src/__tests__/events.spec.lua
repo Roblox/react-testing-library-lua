@@ -34,11 +34,6 @@ local eventTypes = {
 		elementType = "TextBox",
 		init = { key = Enum.KeyCode.Return },
 	},
-}
--- ROBLOX deviation END
-
--- ROBLOX deviation START: subset with implemented methods in RTL, but not implemented in DTL
-local unhandledEventTypes = {
 	{
 		type = "Mouse",
 		events = {
@@ -47,6 +42,11 @@ local unhandledEventTypes = {
 		},
 		elementType = "TextButton",
 	},
+}
+-- ROBLOX deviation END
+
+-- ROBLOX deviation START: subset with implemented methods in RTL, but not implemented in DTL
+local unhandledEventTypes = {
 	{
 		type = "Pointer",
 		events = {
