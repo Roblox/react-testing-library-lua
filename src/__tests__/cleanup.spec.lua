@@ -129,7 +129,7 @@ describe("fake timers and missing act warnings", function()
 			local _, setDeferredCounter = React.useState(nil :: number?)
 			React.useEffect(function()
 				local cancelled = false
-				setTimeout(function()
+				task.delay(0, function()
 					deferredStateUpdateSpy()
 					if not cancelled then
 						setDeferredCounter(counter)
