@@ -23,4 +23,4 @@ JestGlobals = "github.com/roblox/jest-roblox@3.0.0"
 
 [dev_dependencies]
 Jest = "github.com/roblox/jest-roblox@3.0.0"
-LuauRegExp = "github.com/Roblox/luau-regexp@0.2.0"
+LuauRegExp = { target = "github.com/Roblox/luau-regexp", version = "0.2.0", package = "RegExp" }
