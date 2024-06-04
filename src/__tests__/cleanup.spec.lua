@@ -91,7 +91,7 @@ describe("fake timers and missing act warnings", function()
 			React.useEffect(function()
 				local cancelled = false
 				-- ROBLOX deviation START: Lua Promise.resolve is not scheduled. Must use delay(0) for the same behavior
-				Promise.delay(0):andThen(function()
+				task.delay(0, function()
 					microTaskSpy()
 					-- eslint-disable-next-line jest/no-if -- false positive
 					if not cancelled then
