@@ -1,6 +1,6 @@
 [package]
 name = "ReactTestingLibrary"
-version = "12.2.3"
+version = "12.2.4"
 authors = [
     "Ignacio Falk <flakolefluk@gmail.com>",
     "Allan Jeremy <dev@allanjeremy.com>",
