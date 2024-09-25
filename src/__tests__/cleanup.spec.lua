@@ -1,7 +1,5 @@
 -- ROBLOX upstream: https://github.com/testing-library/react-testing-library/blob/v12.1.5/src/__tests__/cleanup.js
-local Packages = script.Parent.Parent.Parent
-
-local JestGlobals = require(Packages.JestGlobals)
+local JestGlobals = require("@pkg/@jsdotlua/jest-globals")
 local expect = JestGlobals.expect
 local test = JestGlobals.test
 local describe = JestGlobals.describe
@@ -9,16 +7,16 @@ local beforeEach = JestGlobals.beforeEach
 local afterEach = JestGlobals.afterEach
 local jest = JestGlobals.jest
 
-local LuauPolyfill = require(Packages.LuauPolyfill)
+local LuauPolyfill = require("@pkg/@jsdotlua/luau-polyfill")
 local console = LuauPolyfill.console
 
-local document = require(Packages.DomTestingLibrary).document
+local document = require("@pkg/@jsdotlua/dom-testing-library").document
 
-local getElementByName = require(script.Parent.Parent.jsHelpers.Element).getElementByName
+local getElementByName = require("../jsHelpers/Element").getElementByName
 
-local React = require(Packages.React)
+local React = require("@pkg/@jsdotlua/react")
 
-local ParentModule = require(script.Parent.Parent)
+local ParentModule = require("..")
 local render = ParentModule.render
 local cleanup = ParentModule.cleanup
 

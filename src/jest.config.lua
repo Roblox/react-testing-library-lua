@@ -1,6 +1,6 @@
-local Packages = script.Parent.Parent
+local ServerScriptService = game:GetService("ServerScriptService")
 
-local TestsSetup = Packages:FindFirstChild("TestsSetup")
+local TestsSetup = ServerScriptService:FindFirstChild("TestsSetup")
 assert(TestsSetup, "TestsSetup folder not found. Please make sure the folder exists in the root of the package.")
 
 local SetupEnv = TestsSetup:FindFirstChild("setup-env")

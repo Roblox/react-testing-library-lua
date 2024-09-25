@@ -1,10 +1,9 @@
 -- ROBLOX upstream: no upstream
 --[[
-    ROBLOX comment: 
+    ROBLOX comment:
     reduce deviations by adding matchers based on testing-library/jest-dom
 ]]
-local Packages = script.Parent.Parent.Parent
-local document = require(Packages.DomTestingLibrary).document
+local document = require("@pkg/@jsdotlua/dom-testing-library").document
 
 local exports = {}
 

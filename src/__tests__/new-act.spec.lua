@@ -1,24 +1,22 @@
 -- ROBLOX upstream: https://github.com/testing-library/react-testing-library/blob/v12.1.5/src/__tests__/new-act.js
-local Packages = script.Parent.Parent.Parent
-
-local JestGlobals = require(Packages.JestGlobals)
+local JestGlobals = require("@pkg/@jsdotlua/jest-globals")
 local expect = JestGlobals.expect
 local test = JestGlobals.test
 local beforeEach = JestGlobals.beforeEach
 local afterEach = JestGlobals.afterEach
 local jest = JestGlobals.jest
 
-local LuauPolyfill = require(Packages.LuauPolyfill)
+local LuauPolyfill = require("@pkg/@jsdotlua/luau-polyfill")
 local Error = LuauPolyfill.Error
 local console = LuauPolyfill.console
 type Promise<T> = LuauPolyfill.Promise<T>
 
-local Promise = require(Packages.Promise)
+local Promise = require("@pkg/@jsdotlua/promise")
 
 local asyncAct, consoleErrorMock
 
 -- ROBLOX deviation: Mock is not supported
--- local _testUtils = require(script.Parent.Parent.jsHelpers["react-dom"]["test-utils"])
+-- local _testUtils = require("../jsHelpers/react-dom/test-utils")
 -- jest.mock(testUtils, function()
 -- 	return {
 -- 		act = function(cb)
@@ -29,7 +27,7 @@ local asyncAct, consoleErrorMock
 
 beforeEach(function()
 	jest.resetModules()
-	asyncAct = require(script.Parent.Parent["act-compat"]).asyncAct
+	asyncAct = require("../act-compat").asyncAct
 	-- ROBLOX deviation START: replace spyOn
 	consoleErrorMock = jest.fn()
 	console.error = consoleErrorMock

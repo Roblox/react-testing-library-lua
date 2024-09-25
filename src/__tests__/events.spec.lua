@@ -1,18 +1,16 @@
 -- ROBLOX upstream: https://github.com/testing-library/react-testing-library/blob/v12.1.5/src/__tests__/events.js
-local Packages = script.Parent.Parent.Parent
-
-local JestGlobals = require(Packages.JestGlobals)
+local JestGlobals = require("@pkg/@jsdotlua/jest-globals")
 local expect = JestGlobals.expect
 local test = JestGlobals.test
 local describe = JestGlobals.describe
 local jest = JestGlobals.jest
 
-local LuauPolyfill = require(Packages.LuauPolyfill)
+local LuauPolyfill = require("@pkg/@jsdotlua/luau-polyfill")
 local Array = LuauPolyfill.Array
 
-local React = require(Packages.React)
+local React = require("@pkg/@jsdotlua/react")
 
-local ParentModule = require(script.Parent.Parent)
+local ParentModule = require("..")
 local render = ParentModule.render
 local fireEvent = ParentModule.fireEvent
 
@@ -58,7 +56,7 @@ local unhandledEventTypes = {
 }
 -- ROBLOX deviation END
 
-Array.forEach(eventTypes, function(ref)
+for _, ref in eventTypes do
 	local type_, events, elementType, init = ref.type, ref.events, ref.elementType, ref.init
 	describe(("%s Events"):format(type_), function()
 		Array.forEach(events, function(event: { fireEventName: string, instanceEventName: string })
@@ -72,12 +70,12 @@ Array.forEach(eventTypes, function(ref)
 			end)
 		end)
 	end)
-end)
+end
 
-Array.forEach(eventTypes, function(ref)
+for _, ref in eventTypes do
 	local type_, events, elementType, init = ref.type, ref.events, ref.elementType, ref.init
 	describe(("Native %s Events"):format(type_), function()
-		Array.forEach(events, function(eventName)
+		for _, eventName in events do
 			local nativeEventName = eventName.fireEventName:lower() -- The doubleClick synthetic event maps to the dblclick native event
 			if nativeEventName == "doubleclick" then
 				nativeEventName = "dblclick"
@@ -102,9 +100,9 @@ Array.forEach(eventTypes, function(ref)
 				fireEvent[eventName.fireEventName](ref.current, init)
 				expect(spy).toHaveBeenCalledTimes(1)
 			end)
-		end)
+		end
 	end)
-end)
+end
 
 test("onChange works", function()
 	local handleChange = jest.fn()
@@ -161,20 +159,20 @@ end)
 
 -- ROBLOX deviation START: No upstream equivalent
 
-Array.forEach(unhandledEventTypes, function(ref)
+for _, ref in unhandledEventTypes do
 	local type_, events, elementType, init = ref.type, ref.events, ref.elementType, ref.init
-	describe(("Unhandled %s Events"):format(type_), function()
-		Array.forEach(events, function(event: { fireEventName: string })
+	describe(`Unhandled {type_} Events`, function()
+		for _, event: { fireEventName: string } in events do
 			local propName = ("on%s%s"):format(event.fireEventName:sub(1, 1):upper(), event.fireEventName:sub(2))
-			test(("triggers %s"):format(propName), function()
+			test(`triggers {propName}`, function()
 				local ref = React.createRef()
 				render(React.createElement(elementType, { ref = ref }))
 				expect(function()
 					fireEvent[event.fireEventName](ref.current, init)
 				end).toThrowError(string.format("Event '%s' not supported", event.fireEventName))
 			end)
-		end)
+		end
 	end)
-end)
+end
 -- ROBLOX deviation END
 return {}

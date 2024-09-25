@@ -1,18 +1,15 @@
 -- ROBLOX upstream: https://github.com/testing-library/react-testing-library/blob/v12.1.5/src/index.js
-local Packages = script.Parent
-
-local JestGlobals = require(Packages.JestGlobals)
+local JestGlobals = require("@pkg/@jsdotlua/jest-globals")
 local afterEach = JestGlobals.afterEach
 
-local LuauPolyfill = require(Packages.LuauPolyfill)
+local LuauPolyfill = require("@pkg/@jsdotlua/luau-polyfill")
 local Object = LuauPolyfill.Object
 
-local jsHelpers = script.jsHelpers
-local isCallable = require(jsHelpers.isCallable)
+local isCallable = require("./jsHelpers/isCallable")
 
 local exports = {} :: { [string]: any }
 
-local cleanup = require(script.pure).cleanup
+local cleanup = require("./pure").cleanup
 -- if we're running in a test runner that supports afterEach
 -- or teardown then we'll automatically run cleanup afterEach test
 -- this ensures that tests run in isolation from each other
@@ -41,10 +38,10 @@ then
 	end
 end
 
-Object.assign(exports, require(script.pure))
+Object.assign(exports, require("./pure"))
 
 -- ROBLOX deviation START: reexport types
-local typesModule = require(script.types)
+local typesModule = require("./types")
 export type within = typesModule.within
 export type QueryByBoundAttribute<T = Instance> = typesModule.QueryByBoundAttribute<T>
 export type AllByBoundAttribute<T = Instance> = typesModule.AllByBoundAttribute<T>

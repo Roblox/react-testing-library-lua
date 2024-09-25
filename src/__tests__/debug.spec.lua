@@ -1,7 +1,5 @@
 -- ROBLOX upstream: https://github.com/testing-library/react-testing-library/blob/v12.1.5/src/__tests__/debug.js
-local Packages = script.Parent.Parent.Parent
-
-local JestGlobals = require(Packages.JestGlobals)
+local JestGlobals = require("@pkg/@jsdotlua/jest-globals")
 local expect = JestGlobals.expect
 local test = JestGlobals.test
 local beforeEach = JestGlobals.beforeEach
@@ -9,11 +7,11 @@ local afterEach = JestGlobals.afterEach
 local afterAll = JestGlobals.afterAll
 local jest = JestGlobals.jest
 
-local LuauPolyfill = require(Packages.LuauPolyfill)
+local LuauPolyfill = require("@pkg/@jsdotlua/luau-polyfill")
 local console = LuauPolyfill.console
 
-local React = require(Packages.React)
-local ParentModule = require(script.Parent.Parent)
+local ParentModule = require("..")
+local React = require("@pkg/@jsdotlua/react")
 local render = ParentModule.render
 local screen = ParentModule.screen
 

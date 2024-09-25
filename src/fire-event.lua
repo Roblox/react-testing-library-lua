@@ -1,14 +1,12 @@
 -- ROBLOX upstream: https://github.com/testing-library/react-testing-library/blob/v12.1.5/src/fire-event.js
-local Packages = script.Parent.Parent
-
-local LuauPolyfill = require(Packages.LuauPolyfill)
+local LuauPolyfill = require("@pkg/@jsdotlua/luau-polyfill")
 local Array = LuauPolyfill.Array
 local Object = LuauPolyfill.Object
 type Object = LuauPolyfill.Object
 
 local exports = {}
 
-local dtlFireEvent = require(Packages.DomTestingLibrary).fireEvent
+local dtlFireEvent = require("@pkg/@jsdotlua/dom-testing-library").fireEvent
 
 -- react-testing-library's version of fireEvent will call
 -- dom-testing-library's version of fireEvent. The reason

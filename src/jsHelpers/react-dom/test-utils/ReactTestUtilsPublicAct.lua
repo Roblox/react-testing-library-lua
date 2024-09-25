@@ -8,30 +8,28 @@
 
 ]]
 
-local Packages = script.Parent.Parent.Parent.Parent.Parent
-
-local LuauPolyfill = require(Packages.LuauPolyfill)
+local LuauPolyfill = require("@pkg/@jsdotlua/luau-polyfill")
 local Boolean = LuauPolyfill.Boolean
 local console = LuauPolyfill.console
 
-local Promise = require(Packages.Promise)
+local Promise = require("@pkg/@jsdotlua/promise")
 
 local exports = {}
 
 -- ROBLOX deviation: Thenable type comes from Shared in roact-alignment
 -- local ReactFiberWorkLoopModule = require(Packages["react-reconciler"].src.ReactFiberWorkLoop)
-local Shared = require(Packages.Shared)
+local Shared = require("@pkg/@jsdotlua/shared")
 type Thenable<R> = Shared.Thenable<R>
 
 -- ROBLOX deviation: Not converting all of ReactDOM
--- local ReactDOM = require(Packages["react-dom"]).default
+-- local ReactDOM = require("@pkg/react-dom").default
 local ReactSharedInternals = Shared.ReactSharedInternals
 local enqueueTask = Shared.enqueueTask
-local Scheduler = require(Packages.Scheduler)
+local Scheduler = require("@pkg/@jsdotlua/scheduler")
 
 -- Keep in sync with ReactDOM.js, and ReactTestUtils.js:
 
-local ReactRoblox = require(Packages.ReactRoblox)
+local ReactRoblox = require("@pkg/@jsdotlua/react-roblox")
 local EventInternals = ReactRoblox.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED.Events
 -- ROBLOX deviation: EventInternals is a table in Lua
 local IsThisRendererActing = EventInternals.IsThisRendererActing
@@ -43,7 +41,7 @@ local IsSomeRendererActing = ReactSharedInternals.IsSomeRendererActing
 
 -- ROBLOX deviation: use realDelay in place of enqueueTask as a fallback to
 -- avoid trouble caused by fake timers
-local realDelay = require(script.Parent["realTaskDelay.roblox.global"])
+local realDelay = require("./realTaskDelay.roblox.global.lua")
 
 -- This is the public version of `ReactTestUtils.act`. It is implemented in
 -- "userspace" (i.e. not the reconciler), so that it doesn't add to the

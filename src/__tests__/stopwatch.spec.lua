@@ -1,23 +1,21 @@
 -- ROBLOX upstream: https://github.com/testing-library/react-testing-library/blob/v12.1.5/src/__tests__/stopwatch.js
-local Packages = script.Parent.Parent.Parent
-
-local JestGlobals = require(Packages.JestGlobals)
+local JestGlobals = require("@pkg/@jsdotlua/jest-globals")
 local expect = JestGlobals.expect
 local test = JestGlobals.test
 local jest = JestGlobals.jest
 
-local LuauPolyfill = require(Packages.LuauPolyfill)
+local LuauPolyfill = require("@pkg/@jsdotlua/luau-polyfill")
 local console = LuauPolyfill.console
 local clearInterval = LuauPolyfill.clearInterval
 local setInterval = LuauPolyfill.setInterval
 local setTimeout = LuauPolyfill.setTimeout
 type Object = LuauPolyfill.Object
 
-local Promise = require(Packages.Promise)
+local Promise = require("@pkg/@jsdotlua/promise")
 
-local React = require(Packages.React)
+local React = require("@pkg/@jsdotlua/react")
 
-local ParentModule = require(script.Parent.Parent)
+local ParentModule = require("..")
 local render = ParentModule.render
 local fireEvent = ParentModule.fireEvent
 local screen = ParentModule.screen

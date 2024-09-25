@@ -1,17 +1,15 @@
 -- ROBLOX upstream: https://github.com/testing-library/react-testing-library/blob/v12.1.5/src/__tests__/render.js
-local Packages = script.Parent.Parent.Parent
-
-local JestGlobals = require(Packages.JestGlobals)
+local JestGlobals = require("@pkg/@jsdotlua/jest-globals")
 local expect = JestGlobals.expect
 local test = JestGlobals.test
 local jest = JestGlobals.jest
 
-local document = require(Packages.DomTestingLibrary).document
+local document = require("@pkg/@jsdotlua/dom-testing-library").document
 local CollectionService = game:GetService("CollectionService")
 
-local React = require(Packages.React)
-local ReactRoblox = require(Packages.ReactRoblox)
-local ParentModule = require(script.Parent.Parent)
+local ParentModule = require("..")
+local React = require("@pkg/@jsdotlua/react")
+local ReactRoblox = require("@pkg/@jsdotlua/react-roblox")
 local render = ParentModule.render
 local screen = ParentModule.screen
 

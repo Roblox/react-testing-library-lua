@@ -1,19 +1,17 @@
 -- ROBLOX upstream: https://github.com/testing-library/react-testing-library/blob/v12.1.5/src/__tests__/auto-cleanup-skip.js
-local Packages = script.Parent.Parent.Parent
-
-local JestGlobals = require(Packages.JestGlobals)
+local JestGlobals = require("@pkg/@jsdotlua/jest-globals")
 local expect = JestGlobals.expect
 local test = JestGlobals.test
 local beforeAll = JestGlobals.beforeAll
 local afterAll = JestGlobals.afterAll
 
-local document = require(Packages.DomTestingLibrary).document
+local document = require("@pkg/@jsdotlua/dom-testing-library").document
 
-local React = require(Packages.React)
+local React = require("@pkg/@jsdotlua/react")
 local render, cleanup
 beforeAll(function()
 	_G.RTL_SKIP_AUTO_CLEANUP = "true"
-	local rtl = require(script.Parent.Parent)
+	local rtl = require("..")
 	render = rtl.render
 	-- ROBLOX deviation START: force cleanup
 	cleanup = rtl.cleanup

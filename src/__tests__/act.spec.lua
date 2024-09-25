@@ -1,13 +1,11 @@
 -- ROBLOX upstream: https://github.com/testing-library/react-testing-library/blob/v12.1.5/src/__tests__/act.js
-local Packages = script.Parent.Parent.Parent
-
-local JestGlobals = require(Packages.JestGlobals)
+local JestGlobals = require("@pkg/@jsdotlua/jest-globals")
 local expect = JestGlobals.expect
 local test = JestGlobals.test
 local jest = JestGlobals.jest
 
-local React = require(Packages.React)
-local ParentModule = require(script.Parent.Parent)
+local ParentModule = require("..")
+local React = require("@pkg/@jsdotlua/react")
 local render = ParentModule.render
 local fireEvent = ParentModule.fireEvent
 local screen = ParentModule.screen

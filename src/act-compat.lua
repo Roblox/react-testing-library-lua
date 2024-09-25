@@ -1,17 +1,15 @@
 -- ROBLOX upstream: https://github.com/testing-library/react-testing-library/blob/v12.1.5/src/act-compat.js
-local Packages = script.Parent.Parent
-
-local LuauPolyfill = require(Packages.LuauPolyfill)
+local LuauPolyfill = require("@pkg/@jsdotlua/luau-polyfill")
 local console = LuauPolyfill.console
 type Promise<T> = LuauPolyfill.Promise<T>
 
-local Promise = require(Packages.Promise)
+local Promise = require("@pkg/@jsdotlua/promise")
 
 local exports = {}
 
--- local React = require(Packages.React)
--- local ReactDOM = require(Packages["react-dom"]).default
-local testUtils = require(script.Parent.jsHelpers["react-dom"]["test-utils"])
+-- local React = require("@pkg/@jsdotlua/react")
+-- local ReactDOM = require("@pkg/react-dom").default
+local testUtils = require("./jsHelpers/react-dom/test-utils")
 local reactAct = testUtils.act
 local actSupported = reactAct ~= nil
 
@@ -118,11 +116,12 @@ local function asyncAct(cb)
 					cbReturn:andThen(function()
 						-- a faux-version.
 						-- todo - copy https://github.com/facebook/react/blob/master/packages/shared/enqueueTask.js
-						Promise.resolve():andThen(function()
+						local function andThenResolve()
 							-- use sync act to flush effects
 							act(function() end)
 							resolve()
-						end)
+						end
+						Promise.resolve():andThen(andThenResolve)
 					end, reject)
 				end
 			end)

@@ -1,7 +1,5 @@
 -- ROBLOX upstream: https://github.com/testing-library/react-testing-library/blob/v12.1.5/src/pure.js
-local Packages = script.Parent.Parent
-
-local LuauPolyfill = require(Packages.LuauPolyfill)
+local LuauPolyfill = require("@pkg/@jsdotlua/luau-polyfill")
 local Error = LuauPolyfill.Error
 local Array = LuauPolyfill.Array
 local Object = LuauPolyfill.Object
@@ -9,21 +7,21 @@ local Set = LuauPolyfill.Set
 local console = LuauPolyfill.console
 type Object = LuauPolyfill.Object
 
-local Promise = require(Packages.Promise)
-local ReactRoblox = require(Packages.ReactRoblox)
+local Promise = require("@pkg/@jsdotlua/promise")
+local ReactRoblox = require("@pkg/@jsdotlua/react-roblox")
 
 local exports = {}
 
-local React = require(Packages.React)
--- local ReactDOM = require(Packages["react-dom"]).default
-local domModule = require(Packages.DomTestingLibrary)
+local React = require("@pkg/@jsdotlua/react")
+-- local ReactDOM = require("@pkg/react-dom").default
+local domModule = require("@pkg/@jsdotlua/dom-testing-library")
 local getQueriesForElement = domModule.getQueriesForElement
 local prettyDOM = domModule.prettyDOM
 local configureDTL = domModule.configure
-local act_compatModule = require(script.Parent["act-compat"])
+local act_compatModule = require("./act-compat")
 local act = act_compatModule.default
 local asyncAct = act_compatModule.asyncAct
-local fireEvent = require(script.Parent["fire-event"]).fireEvent
+local fireEvent = require("./fire-event").fireEvent
 
 -- ROBLOX deviation START: predefine variable
 local cleanupAtContainer
@@ -165,7 +163,7 @@ function cleanupAtContainer(container)
 end
 
 -- just re-export everything from dom-testing-library
-Object.assign(exports, require(Packages.DomTestingLibrary))
+Object.assign(exports, require("@pkg/@jsdotlua/dom-testing-library"))
 exports.render = render
 exports.cleanup = cleanup
 exports.act = act

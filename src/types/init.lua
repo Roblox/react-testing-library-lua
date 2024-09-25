@@ -1,6 +1,5 @@
 -- ROBLOX upstream: https://github.com/testing-library/react-testing-library/blob/v12.1.5/types/index.d.ts
-local Packages = script.Parent.Parent
-local LuauPolyfill = require(Packages.LuauPolyfill)
+local LuauPolyfill = require("@pkg/@jsdotlua/luau-polyfill")
 local Object = LuauPolyfill.Object
 type Array<T> = LuauPolyfill.Array<T>
 type Object = LuauPolyfill.Object
@@ -12,15 +11,15 @@ type React_JSXElementConstructor<T> = any
 local exports = {}
 
 -- TypeScript Version: 3.8
-local domModule = require(Packages.DomTestingLibrary)
+local domModule = require("@pkg/@jsdotlua/dom-testing-library")
 local queries = domModule.queries
 type typeofQueries = typeof(queries)
 
 -- ROBLOX deviation START: ReactDOM not available
 type Renderer = any
 -- ROBLOX deviation END
-local reactAct = require(script.Parent.jsHelpers["react-dom"]["test-utils"]).act
-Object.assign(exports, require(Packages.DomTestingLibrary))
+local reactAct = require("../jsHelpers/react-dom/test-utils").act
+Object.assign(exports, require("@pkg/@jsdotlua/dom-testing-library"))
 
 export type within = domModule.within
 export type QueryByBoundAttribute<T = Instance> = domModule.QueryByBoundAttribute<T>
