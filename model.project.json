@@ -1,0 +1,9 @@
+{
+  "name": "ReactTestingLibrary",
+  "tree": {
+    "$path": "src",
+    "node_modules": {
+      "$path": "node_modules"
+    }
+  }
+}
