@@ -22,6 +22,7 @@ local eventTypes = {
 		type = "Mouse",
 		events = {
 			{ fireEventName = "click", instanceEventName = "Activated" },
+			{ fireEventName = "contextMenu", instanceEventName = "MouseButton2Click" },
 		},
 		elementType = "TextButton",
 	},
