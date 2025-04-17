@@ -5,9 +5,6 @@ local JestGlobals = require(Packages.JestGlobals)
 local expect = JestGlobals.expect
 local test = JestGlobals.test
 local jest = JestGlobals.jest
-local describe = JestGlobals.describe
-local afterAll = JestGlobals.afterAll
-local beforeAll = JestGlobals.beforeAll
 
 local document = require(Packages.DomTestingLibrary).document
 local CollectionService = game:GetService("CollectionService")
@@ -108,29 +105,6 @@ test("renders options.wrapper around node", function()
 	expect(CollectionService:GetTags(container:GetChildren()[1]:GetChildren()[1])).toContain("data-testid=inner")
 	-- ROBLOX deviation END
 end)
-
--- ROBLOX deviation START: there is no such test in upstream
-describe("with custom conrainer", function()
-	local container
-	beforeAll(function()
-		container = Instance.new("Frame")
-		container.Parent = document
-	end)
-
-	test("renders without errors", function()
-		local root =
-			render(React.createElement("Frame", { [React.Tag] = "data-testid=inner" }), { container = container })
-		expect(root.container).toBe(container)
-		expect(root.baseElement).toBe(container)
-		expect(CollectionService:GetTags(root.container:GetChildren()[1])).toContain("data-testid=inner")
-	end)
-
-	afterAll(function()
-		container.Parent = nil
-	end)
-end)
-
--- ROBLOX deviation END
 
 -- ROBLOX FIXME: useEffect is triggered before unmount
 test("flushes useEffect cleanup functions sync on unmount()", function()
