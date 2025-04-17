@@ -71,13 +71,13 @@ local function render(ui, ref_: Object?)
 		baseElement = domModule.document
 		-- ROBLOX deviation END
 	end
+	-- ROBLOX deviation START: replace ReactDom
 	if not container then
-		-- ROBLOX deviation START: replace ReactDom
 		container = Instance.new("Folder")
 		container.Parent = baseElement
-		renderer = ReactRoblox.createLegacyRoot(container)
-		-- baseElement:render(container)
 	end
+	renderer = ReactRoblox.createLegacyRoot(container)
+	-- ROBLOX deviation END
 
 	-- we'll add it to the mounted containers regardless of whether it's actually
 	-- added to document.body so the cleanup method works regardless of whether
