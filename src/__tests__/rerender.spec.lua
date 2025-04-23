@@ -21,6 +21,22 @@ test("rerender will re-render the element", function()
 	-- ROBLOX deviation END
 end)
 
+-- ROBLOX deviation START: There are no tests for this behaviour in upstream,
+-- since it's more of an internal implementation detail.
+-- But given that changing it breaks existing code the test shouldn't hurt
+test("rerender keeps the root", function()
+	local function Greeting(props)
+		return React.createElement("TextLabel", { Text = props.message })
+	end
+	local ref = render(React.createElement(Greeting, { message = "hi" }))
+	local container, rerender = ref.container, ref.rerender
+	local child = container:GetChildren()[1]
+	expect(child).toHaveTextContent("hi")
+	rerender(React.createElement(Greeting, { message = "hey" }))
+	expect(child).toHaveTextContent("hey")
+end)
+-- ROBLOX deviation END
+
 -- ROBLOX deviation START: hydrate not supported
 -- it("hydrate will not update props until next render", function()
 -- 	local initialInputElement = document:createElement("input")

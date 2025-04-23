@@ -106,6 +106,25 @@ test("renders options.wrapper around node", function()
 	-- ROBLOX deviation END
 end)
 
+-- ROBLOX deviation START: Test from 16.3.0 version that also covers custom containers. There is no special test for container support
+-- toContainHTML doesn't make sense in our environment so the whole test is an adaptation
+test("can be called multiple times on the same container", function()
+	local container = Instance.new("Frame")
+
+	local unmount =
+		render(React.createElement("Frame", { [React.Tag] = "data-testid=first" }), { container = container }).unmount
+
+	expect(CollectionService:GetTags(container:GetChildren()[1])).toContain("data-testid=first")
+
+	render(React.createElement("Frame", { [React.Tag] = "data-testid=second" }), { container = container })
+
+	expect(CollectionService:GetTags(container:GetChildren()[1])).toContain("data-testid=second")
+
+	unmount()
+
+	expect(container).toBeEmptyDOMElement()
+end)
+
 -- ROBLOX FIXME: useEffect is triggered before unmount
 test("flushes useEffect cleanup functions sync on unmount()", function()
 	local spy, spyFn = jest.fn()
