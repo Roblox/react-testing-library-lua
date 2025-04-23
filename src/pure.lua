@@ -50,9 +50,8 @@ configureDTL({
 	end,
 })
 
-local mountedContainers = Set.new()
--- ROBLOX deviation START: required because we don't have ReactDOM
-local renderer
+-- ROBLOX deviation START: Keep the roots to avoid recreating them on rerender
+local mountedContainers = {}
 -- ROBLOX deviation END
 
 local function render(ui, ref_: Object?)
@@ -75,14 +74,23 @@ local function render(ui, ref_: Object?)
 		-- ROBLOX deviation START: replace ReactDom
 		container = Instance.new("Folder")
 		container.Parent = baseElement
-		renderer = ReactRoblox.createLegacyRoot(container)
 		-- baseElement:render(container)
+		-- ROBLOX deviation END
 	end
 
-	-- we'll add it to the mounted containers regardless of whether it's actually
-	-- added to document.body so the cleanup method works regardless of whether
-	-- they're passing us a custom container or not.
-	mountedContainers:add(container)
+	-- ROBLOX deviation START: Do not mount new root under the same container,
+	-- the problem doesn't exist in upsteam since it was using render function.
+	local root
+	if not mountedContainers[container] then
+		root = ReactRoblox.createLegacyRoot(container)
+		-- we'll add it to the mounted containers regardless of whether it's actually
+		-- added to document.body so the cleanup method works regardless of whether
+		-- they're passing us a custom container or not.
+		mountedContainers[container] = root
+	else
+		root = mountedContainers[container]
+	end
+	-- ROBLOX deviation END
 
 	local function wrapUiIfNeeded(innerElement)
 		return if WrapperComponent then React.createElement(WrapperComponent, nil, innerElement) else innerElement
@@ -97,7 +105,7 @@ local function render(ui, ref_: Object?)
 		else
 			-- ROBLOX deviation START: deviates from using ReactDOM:render
 			-- ReactDOM:render(wrapUiIfNeeded(ui), container)
-			renderer:render(wrapUiIfNeeded(ui) :: any)
+			root:render(wrapUiIfNeeded(ui) :: any)
 			-- ROBLOX deviation END
 		end
 	end)
@@ -121,7 +129,7 @@ local function render(ui, ref_: Object?)
 			act(function()
 				-- ROBLOX deviation START. not using ReactDOM:unmountComponentAtNode
 				-- ReactDOM:unmountComponentAtNode(container)
-				renderer:unmount()
+				root:unmount()
 				-- ROBLOX deviation END
 			end)
 		end,
@@ -146,23 +154,19 @@ local function render(ui, ref_: Object?)
 	}, getQueriesForElement(baseElement, queries))
 end
 
+-- ROBLOX deviation START: cleanup custom map that doesn't exist upstream
 local function cleanup()
-	mountedContainers:forEach(cleanupAtContainer)
-end
-
--- maybe one day we'll expose this (perhaps even as a utility returned by render).
--- but let's wait until someone asks for it.
-function cleanupAtContainer(container)
-	act(function()
-		-- ROBLOX deviation START. not using ReactDOM:unmountComponentAtNode
-		-- ReactDOM:unmountComponentAtNode(container)
-		renderer:unmount()
-	end)
-	if container.Parent == domModule.document then
-		container.Parent = nil
+	for container, root in mountedContainers do
+		act(function()
+			root:unmount()
+		end)
+		if container.Parent == domModule.document then
+			container.Parent = nil
+		end
 	end
-	mountedContainers:delete(container)
+	table.clear(mountedContainers)
 end
+-- ROBLOX deviation END
 
 -- just re-export everything from dom-testing-library
 Object.assign(exports, require(Packages.DomTestingLibrary))
