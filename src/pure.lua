@@ -5,7 +5,6 @@ local LuauPolyfill = require(Packages.LuauPolyfill)
 local Error = LuauPolyfill.Error
 local Array = LuauPolyfill.Array
 local Object = LuauPolyfill.Object
-local Set = LuauPolyfill.Set
 local console = LuauPolyfill.console
 type Object = LuauPolyfill.Object
 
@@ -24,10 +23,6 @@ local act_compatModule = require(script.Parent["act-compat"])
 local act = act_compatModule.default
 local asyncAct = act_compatModule.asyncAct
 local fireEvent = require(script.Parent["fire-event"]).fireEvent
-
--- ROBLOX deviation START: predefine variable
-local cleanupAtContainer
--- ROBLOX deviation END
 
 configureDTL({
 	asyncWrapper = function(cb)
